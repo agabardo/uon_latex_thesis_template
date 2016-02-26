@@ -1,0 +1,1166 @@
+% \iffalse meta-comment
+%%
+%%  This is cssethesis.dtx $Revision: 1.7 $.
+%%
+%%  Please note:  This document class is not compatable with the
+%%                old LaTeX 2.09.  It uses LaTeX2e specific commands.
+%%
+%%  Please send bug reports to:
+%%
+%%  David.Squire@csse.monash.edu.au (DMS)
+%%
+%% Revision history:
+%% 20051018 DMS Changes in version 1.7:
+%% -    fixed up headers and footers in draft mode, so that draft mode puts
+%%      a draft notice and timestamp in the footer, and leaves the standard
+%%      headers alone.
+%% -    fixed size of "DRAFT" text so that it fits in the margin
+%% -    removed command \thesisdepartmentname, and provided a default value
+%%      for \@thesisdepartment, that can be reset using the
+%%      \thesisdepartment command. This is to cope with the new "Clayton
+%% -    removed command \thesisauthoraddress
+%%      School of Information Technology" and "Caulfield School of
+%%      Information Technology"
+%% -    Changed BSE coursecode to 2770
+%% -	Changed references to "School of Computer Science and Software
+%%      Engineering" in documentation
+%% 20040207 DMS New in version 1.6:
+%%  -   Removed use of ulem from thesissignaturepage (which is not used in
+%%      the example document).
+%% 20040206 
+%%  -   Fixed "Underfull \hbox error in the declaration.
+%%  -   Removed loading of ulem package, which was not being used.
+%%  -   Added support for the new Master of Computer Science (minor thesis).
+%%  -   Fixed line spacing of thesis title on abstract and declaration
+%%      pages. This was a problem for multi-line titles.
+%%  -   Added pdflatex option, so that a pdf crest is used, and the
+%%      appropriate option passed to the graphics package. The user must
+%%      then compile with pdflatex, and use pdf figures.
+%% 20040205 DMS
+%%  -   Now catch any openany or openright options. The frontmatter is
+%%      forced to openany, and the user's choice used for the mainmatter.
+%%      The default is openright.
+%%  -   Use geometry package to set page layout.
+%%  -   Removed redefinition of chapter.
+%%  -   Removed definition of a new page style. Just use defaults available
+%%      in book.cls - the user can define new ones with the fancyheadings
+%%      pacakge if wanted.
+%%  -   Changed abstract page so that it prints the actual qualifications
+%%      of the author, not the one which the thesis will get them if passed!
+%%  -   stopped forcing of |oneside| option to book.cls - now it should get
+%%      whatever the user specifies in the documentclass options. Note that
+%%      |twoside| is the default for book.cls.
+%% 20040204 DMS
+%%   -  Fixed bugs introduced by attempt to support literature review,
+%%      which suppressed printing of email addresses, associate supervisor
+%%      details, etc. 
+%%   -  Changed name of PhD thesis from "Dissertation" to "Thesis".
+%%   -  Removed supervisors' email addresses from title page.
+%%   -  Added email addresses to the abstract page.
+%% 20020727 DMS New in version 1.5:
+%%   -  The thebibliography environment was updated to reflect a
+%%      more recent book.cls. This fixed a bug in version 1.4 when used with
+%%      more recent \LaTeX2e distributions
+%%   -  commands defined so that user can set most commonly needed options
+%%      without needing to use \renewcommand
+%%   -  thesis type options modified, and some added, to reflect the current
+%%      courses available in the school
+%%   -  command \thesiscoursecode added so that the numerical coursecode can
+%%      be output on title page
+%%   -  Option nocoursecode added so that the output of the numerical
+%%      coursecode can be supressed if desired
+%%   -  Title page modified to include Monash Crest
+%%   -  Default values set up for month and year, so that setting them is
+%%      now optional
+%%   -  Option litreview added so that user can indicate that this is a
+%%      literature review, rather than the thesis itself. A different title
+%%      page in produced if so.
+%%   -  commands added to support author's student id and email address
+%%   -  commands added to support associate supervisor
+%%   -  commands added to support supervisors' email addresses
+%%   -  specification of previous degrees made optional
+% \fi
+%
+% \DoNotIndex{\.,\@MM,\@Mii,\@Miii,\@biblabel,\@bsphack,\@currbox}
+% \DoNotIndex{\@currentlabel,\@currsize,\@depth,\@empty,\@floatpenalty}
+% \DoNotIndex{\@fltovf,\@footnotetext,\@freelist,\@gobble,\@gobbletwo}
+% \DoNotIndex{\@height,\@m,\@makefntext,\@minus,\@one,\@next,\@noitemerr}
+% \DoNotIndex{\@nomath,\@parboxrestore,\@parmoderr,\@plus}
+% \DoNotIndex{\@restonecolfalse,\@restonecoltrue,\@setsize,\@starttoc}
+% \DoNotIndex{\@tempa,\@tempdima,\@tempcnta,\@tfor,\@thefnmark,\@topnewpage}
+% \DoNotIndex{\@topnum,\@warning,\@width,\@xfloat,\@xxxii,\\,\ }
+% \DoNotIndex{\@afterindentfalse,\@afterindenttrue,\@finalstrut}
+% \DoNotIndex{\@mainmatterfalse,\@mainmattertrue,\@mkboth}
+% \DoNotIndex{\addcontensline,\addtocontents,\addtocounter,\addvspace}
+% \DoNotIndex{\advance,\Alph,\arabic,\arraystretch,\AtEndOfClass}
+% \DoNotIndex{\begin,\begingroup,\bfseries,\bgroup,\bibindend,\bibname}
+% \DoNotIndex{\boxmaxdepth,\bibindent}
+% \DoNotIndex{\c@secnumdepth,\chaptermark,\clearpage}
+% \DoNotIndex{\CurrentOption,\count,\CodelineIndex,\CodelineNumbered}
+% \DoNotIndex{\csname,\color@begingroup,\color@endgroup}
+% \DoNotIndex{\chapter,\cleardoublepage,\columnwidth}
+% \DoNotIndex{\DeclareOption,\def,\divide,\do,\DocInput,\documentclass,\dp}
+% \DoNotIndex{\DocInput}
+% \DoNotIndex{\edef,\else,\EnableCrossrefs,\end,\endcsname,\endgroup}
+% \DoNotIndex{\endlist,\endspacing,\ExecuteOptions,\expandafter}
+% \DoNotIndex{\f@baselineskip,\fi,\floadingpenalty,\fontsize}
+% \DoNotIndex{\footins,\footnotesep,\footnotesize,\floatingpenalty}
+% \DoNotIndex{\global,\GlossaryParms}
+% \DoNotIndex{\hbox,\hfil,\hfill,\hsize,\hskip,\Huge,\huge,\hss,\hspace}
+% \DoNotIndex{\if,\if@openbib,\if@restonecol,\if@twocolumn,\ifcase}
+% \DoNotIndex{\ifhmode,\ifinner,\ifnum,\ifx,\ignorespaces,\insert}
+% \DoNotIndex{\interfootnotelinepenalty,\interlinepenalty,\itemindent}
+% \DoNotIndex{\IndexPrologue,\item}
+% \DoNotIndex{\labelsep,\labelwidth,\let,\line,\list,\listparindent}
+% \DoNotIndex{\listtablename,\long,\loop,\LoadClass,\listfigurename}
+% \DoNotIndex{\m@ne,\m@th,\makeatletter,\makeatother,\makeindex}
+% \DoNotIndex{\mkern,\multiply,\multiput}
+% \DoNotIndex{\NeedsTeXFormat,\newblock,\newcommand,\newcount}
+% \DoNotIndex{\newenvironment,\newpage,\nobreak,\noindent,\nopagebreak}
+% \DoNotIndex{\normalbaselineskip,\number,\numberline,\newif}
+% \DoNotIndex{\onecolumn,\or}
+% \DoNotIndex{\p@,\p@enumiv,\par,\PassOptionsToClass,\ProcessOptions}
+% \DoNotIndex{\protect,\ProvidesClass}
+% \DoNotIndex{\raggedleft,\raggedright,\refstepcounter,\renewcommand}
+% \DoNotIndex{\repeat,\reset@font,\rule,\relax,\renewenvironment}
+% \DoNotIndex{\RecordChanges}
+% \DoNotIndex{\secdef,\sectionmark,\setbox,\setcounter,\setlength}
+% \DoNotIndex{\setnew@baselineskip,\settowidth,\sfcode,\sixt@@n}
+% \DoNotIndex{\sloppy,\slshape,\space,\spacing,\splitmaxdepth}
+% \DoNotIndex{\splittopskip,\strut,\strutbox,\selectfont,\smallskip}
+% \DoNotIndex{\textsl,\theenumiv,\thepage,\thechapter,\today,\two@}
+% \DoNotIndex{\twocolumn,\typeout}
+% \DoNotIndex{\UL@cr,\uline,\undefined,\unitlength,\usecounter,\usepackage}
+% \DoNotIndex{\uppercase}
+% \DoNotIndex{\value,\vbox,\vfil,\vfill,\vrule,\vskip,\vspace}
+% \DoNotIndex{\z@}
+%
+% \title{A document class for theses for the
+% Clayton and Caulfield Schools of Information Technology\\ Monash University}
+%
+% \author{David Squire and Dean Thompson}
+% \date{Date: 2005/10/18 15:30:00}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% This file implements a document class suitable for theses presented in
+% the Clayton and Caulfield Schools of Information Technology and Monash
+% University. It may be suitable for publications at other universities
+% with some modifications.
+%
+% The |cssethesis| document class is based on |book| document class contained
+% in the standard \LaTeX2e distribution.  The basic functionality of |book.cls|
+% is retained.  A few routines from |book| have been redefined. Note that the
+% default layout is for two-sided printing. Use the class option |oneside| if
+% you want margins, headers and footers for single-sided printing.
+%
+% |cssethesis.dtx| requires an additional \LaTeX2e package, |setspace|.
+% Packages can be found on CTAN archive sites, and |setspace.sty| should have
+% been included in this distribution (though you should probably leave it and
+% use the version with your \LaTeX2e distribution, which is most likely more
+% recent). |setspace| defines four new environments: |singlespace|,
+% |doublespace|, |onehalfspace|, and |spacing|. Please refer to its
+% documentation for more information. |cssethesis.dtx| also makes use of the
+% standard \LaTeX2e packages |geometry| and |graphicx|.
+%
+% Also included with this distribution are the files for the |harvard| package,
+% which provides a powerful citation scheme, and some associated bibliography
+% style files. The combination of the |harvard| package and the |dcu|
+% bibliography style is recommended (see |example.tex|). Note that the |natbib|
+% package supports similar functionality, and is preferred by many.
+%
+% |cssethesis.dtx| was originally based on |utthesis.cls| written by
+% Dinesh Das.  It also has origins in the wuthesis.dtx by Kevin
+% S. Ruland of Sever Institute. 
+%
+%
+% \section{Docstrip Commands}
+% This section of code is for docstrip.  If \LaTeX\ is run with this file,
+% |cssethesis.dtx|, as input, documented source code will be produced.
+%
+%    \begin{macrocode}
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{doc}                  % use the doc package
+\IndexPrologue{}                  % remove default index prologue
+\setcounter{IndexColumns}{2}      % two column index
+\EnableCrossrefs                  % make the command index
+\CodelineIndex                    %    by code line
+\CodelineNumbered                 % number the code lines
+% I really want the changelog to be one column.  So
+% theglossary is redefined.
+\makeatletter
+\renewenvironment{theglossary}{%
+ \smallskip
+ \GlossaryParms
+ \let\item\@idxitem
+ \ignorespaces}{}
+\makeatother
+\RecordChanges                    % make the changelog
+\begin{document}
+  \DocInput{cssethesis.dtx}
+\end{document}
+%</driver>
+%    \end{macrocode}
+%
+% \iffalse
+%<*class>
+% \fi
+% \section{Identification}
+%   Identify this package, and its contents to the user and latex.
+%    \begin{macrocode}
+% Actually not much of this code remains, but the copyright
+% remains.
+%*************************************************************
+%** UT Austin Thesis Style File, version 2.0, January 1995
+%**                                                          
+%** Copyright (c) 1995 Dinesh Das.  All rights reserved.
+%** This file is free and can be modified or distributed as
+%**
+%** (1) This copyright notice is kept intact on all modified
+%**     copies.
+%** (2) If this file is modified, the original file name must
+%**     not be used.
+%*************************************************************
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{cssethesis}[2005/10/18 v1.7 Monash Caulfield and Clayton Schools of Information Technology thesis class]
+%    \end{macrocode}
+%
+% \section{Declaration of Options}
+%
+%  The |pdflatex| option allows the user to specify that they wish to compile
+%  their document using pdflatex. This means that the Adobe |PDF| file format
+%  must be used for included graphics, rather than Postscript.  We need to know
+%  this so that we can pass the right option to the graphicx package.
+%    \begin{macrocode}
+\newif\if@pdflatex \@pdflatexfalse % Default is false
+\DeclareOption{pdflatex}{\@pdflatextrue}
+%    \end{macrocode}
+%
+%  Intercept the |openright| and |openany| options. We want to be able to
+%  override them in the frontmatter.
+%    \begin{macrocode}
+\newif\if@wasopenright \@wasopenrighttrue % true is the default
+\DeclareOption{openright}{\@wasopenrighttrue}
+\DeclareOption{openany}{\@wasopenrightfalse}
+%    \end{macrocode}
+%
+%  The |thesisdraft| option is useful for printing draft copies of the
+%  thesis.  It will print a time stamp in the header of every page.
+%    \begin{macrocode}
+\DeclareOption{thesisdraft}{%
+  \AtEndOfClass{% So it will override the definition given below
+	\let\ps@plain\@empty
+    \def\ps@plain{%
+    	\let\@oddfoot\@empty\let\@evenfoot\@empty
+    	\def\@oddfoot{\hfil\textsl{Draft of \timestamp}}%
+    	\def\@evenfoot{\textsl{Draft of \timestamp}\hfil}%
+		}
+	\let\ps@headings\@empty
+    \def\ps@headings{%
+    	\let\@oddfoot\@empty\let\@evenfoot\@empty
+    	\def\@oddfoot{\hfil\textsl{Draft of \timestamp}}%
+    	\def\@evenfoot{\textsl{Draft of \timestamp}\hfil}%
+		}
+   }
+}
+%    \end{macrocode}
+%
+%  If printing on a PostScript printer |thesispsdraft| can be used to add
+%  a PostScript |special| draft message across the page.
+%dr
+%    \begin{macrocode}
+\DeclareOption{thesispsdraft}{%
+  \AtEndOfClass{% So it will override the definition given below
+	\let\ps@plain\@empty
+    \def\ps@plain{%
+		\special{!userdict begin /bop-hook{gsave 70 270 translate
+          90 rotate /Times-Roman findfont 80 scalefont setfont
+          0 0 moveto 0.9 setgray (DRAFT) show grestore}def end}
+		% note: what follows here is, and should be identical to that for
+		% the thesis draft option above. There must be some way of making
+		% this happen automatically...
+    	\let\@oddfoot\@empty\let\@evenfoot\@empty
+    	\def\@oddfoot{\hfil\textsl{Draft of \timestamp}}%
+    	\def\@evenfoot{\textsl{Draft of \timestamp}\hfil}%
+		}
+	\let\ps@headings\@empty
+    \def\ps@headings{%
+    	\let\@oddfoot\@empty\let\@evenfoot\@empty
+    	\def\@oddfoot{\hfil\textsl{Draft of \timestamp}}%
+    	\def\@evenfoot{\textsl{Draft of \timestamp}\hfil}%
+		}
+	}
+  }
+%    \end{macrocode}
+%
+%  Either a phd thesis, masters, masters (minor) or honours thesis.
+%  Default is phd thesis. Note the different options for honours and 
+%  degrees in Computing, Computer Science, Digital Systems, Software
+%  Engineering and Science. There are also options for different kinds of
+%  Masters theses.
+%
+%    \begin{macrocode}
+\DeclareOption{phdthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{for fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Doctor of Philosophy}
+		\newcommand{\thesisdegreeabbreviation}{PhD}
+		\newcommand{\thesiscoursecode}{0190}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{mitthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{for fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Master of Information Technology (Research)}
+		\newcommand{\thesisdegreeabbreviation}{MIT}
+		\newcommand{\thesiscoursecode}{1895}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{mitminorthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Minor Thesis}
+		\newcommand{\thesisdegree}{Master of Information Technology (Minor Thesis)}
+		\newcommand{\thesisdegreeabbreviation}{MIT}
+		\newcommand{\thesiscoursecode}{3316}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+% This one is for people doing an MIT (Coursework) with a minor thesis
+\DeclareOption{mitcourseworkthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Minor Thesis}
+		\newcommand{\thesisdegree}{Master of Information Technology (Coursework)}
+		\newcommand{\thesisdegreeabbreviation}{MIT}
+		\newcommand{\thesiscoursecode}{2402}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{mcsminorthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Minor Thesis}
+		\newcommand{\thesisdegree}{Master of Computer Science (Minor Thesis)}
+		\newcommand{\thesisdegreeabbreviation}{MCS}
+		\newcommand{\thesiscoursecode}{3328}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{mdcthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{for fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Master of Digital Communications}
+		\newcommand{\thesisdegreeabbreviation}{MDC}
+		\newcommand{\thesiscoursecode}{2406}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{bcomphonoursthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Bachelor of Computing with Honours}
+		\newcommand{\thesisdegreeabbreviation}{BComp(Hons)}
+		\newcommand{\thesiscoursecode}{0194}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{bcshonoursthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Bachelor of Computer Science with Honours}
+		\newcommand{\thesisdegreeabbreviation}{BCompSc(Hons)}
+		\newcommand{\thesiscoursecode}{1608}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{bdshonoursthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Bachelor of Digital Systems with Honours}
+		\newcommand{\thesisdegreeabbreviation}{BDigSys(Hons)}
+		\newcommand{\thesiscoursecode}{1200}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}  
+\DeclareOption{bshonoursthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Bachelor of Science (Computer Science) with
+		Honours}
+		\newcommand{\thesisdegreeabbreviation}{BSc(Hons)}
+		\newcommand{\thesiscoursecode}{0051}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{bsehonoursthesis}{%
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Bachelor of Software Engineering with
+		Honours}
+		\newcommand{\thesisdegreeabbreviation}{BSE(Hons)}
+		\newcommand{\thesiscoursecode}{2770}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+%
+%    \end{macrocode}
+%
+%  The following two Masters degree types are being phased out. They are
+%  retained for historical accuracy.
+%
+%    \begin{macrocode}
+%
+\DeclareOption{mcompthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{for fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Master of Computing}
+		\newcommand{\thesisdegreeabbreviation}{MComp}
+		\newcommand{\thesiscoursecode}{}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}
+\DeclareOption{mcompminorthesis}{% 
+	\ifx\undefined\thesistype
+		\newcommand{\thesisfulfillment}{in partial fulfillment}
+		\newcommand{\thesistype}{Thesis}
+		\newcommand{\thesisdegree}{Master of Computing (Minor)}
+		\newcommand{\thesisdegreeabbreviation}{MComp}
+		\newcommand{\thesiscoursecode}{}
+	\else
+		\ClassError{cssethesis}{only one thesis type option may be
+		specified}{}
+	\fi
+}  
+%    \end{macrocode}
+%
+%  The |nocoursecode| option is used to suppress the printing of the course
+%  code after the name of the course.
+%
+%    \begin{macrocode}
+%
+\DeclareOption{nocoursecode}{% 
+    \let\thesiscoursecode\@undefined
+}  
+%
+%    \end{macrocode}
+%
+%  The |litreview| option is used to indicate that this is a literature
+%  review for the thesis, rather than the thesis itself. This changes the
+%  title, and also causes information such as the student ID, supervisors
+%  and email addresses to be shown. This is not yet fully supported.
+%
+%    \begin{macrocode}
+%
+\newif\if@litreview \@litreviewfalse
+\DeclareOption{litreview}{% 
+	\@litreviewtrue
+	\renewcommand{\thesistype}{Literature Review}
+}  
+%
+%    \end{macrocode}
+%
+%  These do the obvious, that is switch spacing in the main body of text.
+%  Monash University requires either |oneandhalfspace| or
+%  |doublespace|.  |singlespace| is useful for drafts and doesn't
+%  kill as many trees.  If none is selected, the body will be set with
+%  |singlespace| spacing.
+%
+%  Each option executes the corresponding command from |setspace| at
+%  the |\begin{document}| command.  Their execution must be delayed because
+%  |setspace| requires the macro |\@normalsize| to be defined.  But
+%  the definition of |\@normalsize| (in |book|) is delayed until after
+%  the entire class is loaded.
+%    \begin{macrocode}
+\DeclareOption{singlespace}{\AtBeginDocument{\singlespacing}}
+\DeclareOption{oneandhalfspace}{\AtBeginDocument{\onehalfspacing}}
+\DeclareOption{doublespace}{\AtBeginDocument{\doublespacing}}
+%    \end{macrocode}
+%
+%  This option forces the first paragraph after section headings to be
+%  indented.
+%    \begin{macrocode}
+\DeclareOption{indentfirst}{\let\@afterindentfalse\@afterindenttrue
+                            \@afterindenttrue}
+%    \end{macrocode}
+%
+% Pass all other options to book.cls
+%    \begin{macrocode}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+%    \end{macrocode}
+%  The default options are
+%    \begin{macrocode}
+\ExecuteOptions{oneandhalfspace}
+\ProcessOptions
+%    \end{macrocode}
+%
+%  We need to load the base class book 
+%    \begin{macrocode}
+\LoadClass{book}[1994/12/01]
+%    \end{macrocode}
+%
+% Make sure that one of |phdthesis|, |mitthesis|, etc.\ is selected.
+%    \begin{macrocode}
+\ifx\undefined\thesistype
+  \ClassError{cssethesis}
+   {thesis type not specified. Please give a class option to specify the
+   thesis type}%
+   {Use, for example, \protect\documentclass[phdthesis]{cssethesis}.
+   Possibilities are: phdthesis, mitthesis, mitminorthesis,
+   mitcourseworkthesis, mcsminorthesis, mdcthesis, bcomphonoursthesis,
+   bcshonoursthesis, bdshonoursthesis, bshonoursthesis,bsehonoursthesis}
+\fi
+%    \end{macrocode}
+%
+% Load in the |geometry| package, setting up the page layout. This
+% simplifies things greatly compared to trying to set all the lengths
+% manually.
+%    \begin{macrocode}
+\RequirePackage[paper=a4paper,left=30mm,width=150mm,top=25mm,bottom=25mm]{geometry}
+%    \end{macrocode}
+%
+% Load in the |graphicx| package. This package is used to load the image for
+% the Monash Crest. Note that the default is to pass the |dvips| option---the
+% user must give the |pdflatex| option to |\documentclass| if they want to use
+% PDF figures.
+%    \begin{macrocode}
+\if@pdflatex
+	\RequirePackage[pdftex]{graphicx}
+\else
+	\RequirePackage[dvips]{graphicx}
+\fi
+%    \end{macrocode}
+%
+% Load in |setspace| to control baseline spacing
+%    \begin{macrocode}
+\RequirePackage{setspace}
+%    \end{macrocode}
+%
+% \section{User Customization}
+%  This section shows the default settings for a mutitude of user
+%  changeable commands.  These are used in setting the various
+%  pages of the thesis.
+%
+% \subsection{Should be set by the author}
+%  Each of the following should be customized by the author using
+%  commands of the form |\thesisauthor{Ima B. Student}|. The default values
+%  may be O.K.\ for some things.
+%
+%    \begin{macrocode}
+\newcommand*{\thesisauthor}[1]{\gdef\@thesisauthor{#1}}
+\newcommand*{\thesisauthorlastname}[1]{\gdef\@thesisauthorlastname{#1}}
+\newcommand*{\thesisauthorpreviousdegrees}[1]{\gdef\@thesisauthorpreviousdegrees{#1}}
+\newcommand*{\thesisauthorstudentid}[1]{\gdef\@thesisauthorstudentid{#1}}
+\newcommand*{\thesisauthoremail}[1]{\gdef\@thesisauthoremail{#1}}
+\newcommand*{\thesismonth}[1]{\gdef\@thesismonth{#1}}
+\def\@thesismonth{\ifcase%
+					\month\or January%
+					\or February%
+					\or March%
+					\or April%
+					\or May%
+					\or June%
+					\or July%
+					\or August%
+					\or September%
+					\or October%
+					\or November%
+					\or December\fi} % use current month as default
+\newcommand*{\thesisyear}[1]{\gdef\@thesisyear{#1}}
+\def\@thesisyear{\number\year} % use current year as default
+\newcommand*{\thesistitle}[1]{\gdef\@thesistitle{#1}}
+\newcommand*{\thesissupervisor}[1]{\gdef\@thesissupervisor{#1}}
+\newcommand*{\thesissupervisoremail}[1]{\gdef\@thesissupervisoremail{#1}}
+\newcommand*{\thesisassocsupervisor}[1]{\gdef\@thesisassocsupervisor{#1}}
+\newcommand*{\thesisassocsupervisoremail}[1]{\gdef\@thesisassocsupervisoremail{#1}}
+%% Set up these ones with default values
+\gdef\@thesisdepartment{Clayton School of Information Technology}
+\newcommand*{\thesisdepartment}[1]{\gdef\@thesisdepartment{#1}}
+\newcommand*{\thesisuniversity}[1]{\gdef\@thesisuniversity{#1}}
+\def\@thesisuniversity{Monash University}
+\newcommand*{\thesistypist}[1]{\gdef\@thesistypist{#1}}
+\def\@thesistypist{the author}
+\newcommand*{\thesisdedication}[1]{\gdef\@thesisdedication{#1}}
+%    \end{macrocode}
+%
+% \subsection{Need not be redefined}
+%  These commands are usually fine as is.  They may be changed using
+%  |\renewcommand| if desired.
+%    \begin{macrocode}
+\newcommand{\thesisdefaultbaselinestretch}{1.5}
+\newcommand{\thesistypetypesize}{\large}
+\newcommand{\thesistitletypesize}{\Large}
+\newcommand{\thesistitlebold}{\textbf{\thesistitletypesize\@thesistitle}}
+\newcommand{\thesisstudenttypesize}{\large}
+\newcommand{\thesisstudentbold}{\textbf{\thesisstudenttypesize \thesisstudent}}
+\newcommand{\thesisdegreetypesize}{\large}
+\newcommand{\thesistitlepagefont}{\fontsize{14}{14}\selectfont}
+\newcommand{\thesiscopyrightholder}{\@thesisauthor}
+\newcommand{\thesiscommittee}{Supervising Committee:}
+\newcommand{\thesiscommitteesize}{5}
+\newcommand{\thesisvitahead}{Vita}
+\newcommand{\thesisvitaheadtypesize}{\huge\bfseries}
+\newcommand{\thesisacknowledgmenthead}{Acknowledgments}
+\newcommand{\thesisacknowledgmentsigname}{\@thesisauthor}
+\newcommand{\thesisacknowledgmentsignametype}{\large}
+\newcommand{\thesisacknowledgmentsigplace}%
+    {{\slshape
+        \@thesisuniversity \\
+        \@thesismonth\ \@thesisyear}}
+\newcommand{\thesisstudent}{%
+	\ifx\undefined\@thesisauthorpreviousdegrees
+		\@thesisauthor
+	\else
+	\@thesisauthor, \@thesisauthorpreviousdegrees
+	\fi
+}
+%    \end{macrocode}%
+%
+% These penalties eliminate widows, orphans (clubs), and pages ending
+% in hyphens.
+%    \begin{macrocode}
+\widowpenalty =10000
+\clubpenalty  =10000
+\brokenpenalty=10000
+%    \end{macrocode}
+%
+% \section{Page styles and chapter openings}
+%
+% We like to use different page styles for the front matter and main text
+% of the document.  For the front matter, the page numbers should be at the
+% bottom so we use the |plain| page style. For the main matter, we use the
+% default |headings| style from |book.cls|. We also want ``chapters'' to be
+% able to start on any page in the front matter, but only on righthand
+% pages in the main matter (unless the user specifies the option
+% |openany|).
+% 
+% \begin{macro}{\frontmatter}
+%    \begin{macrocode}
+\renewcommand{\frontmatter}{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{roman}
+% These line added (not in book.cls):
+  \@openrightfalse
+  \pagestyle{plain}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+%    \begin{macrocode}
+\renewcommand{\mainmatter}{%
+  \cleardoublepage
+  \@mainmattertrue
+  \pagenumbering{arabic}
+% These lines added:
+  \if@wasopenright
+  	\@openrighttrue % restore previous setting
+  \else
+  	\@openrightfalse
+  \fi
+  \pagestyle{headings}}
+%    \end{macrocode}
+% \end{macro}
+%
+%% \section{Frontmatter}
+%
+%  These commands typeset various pages in the front matter.  Their order
+%  in this file is not the order in which they should appear in a thesis.
+%  Please refer to the sample document for proper order.
+%
+% \begin{macro}{\thesisdedicationpage}
+%  This is a simple command.
+%    \begin{macrocode}
+\newcommand{\thesisdedicationpage}{%
+    \strut \vfill
+    \begin{spacing}{1.5}
+    \begin{center}
+      \@thesisdedication
+    \end{center}
+    \end{spacing}
+    \vfill \strut
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%% \begin{environment}{thesisacknowledgments}
+%  Currently it sets the contents in single spacing, but in the future may
+%  be changeable.
+%    \begin{macrocode}  
+\newenvironment{thesisacknowledgments}
+    {%
+     \chapter*{\thesisacknowledgmenthead
+         \@mkboth{\thesisacknowledgmenthead}
+                 {\thesisacknowledgmenthead}}
+     \addcontentsline{toc}{chapter}{\thesisacknowledgmenthead}
+     \begin{spacing}{1.1}}
+    {\nopagebreak\end{spacing} \par\nopagebreak
+     \raggedleft
+      {\thesisacknowledgmentsignametype\thesisacknowledgmentsigname}
+     \\*[10mm]
+     \raggedright
+      \thesisacknowledgmentsigplace
+     \newpage}
+%    \end{macrocode}
+% \end{environment}
+%
+%
+% \begin{macro}{\thesistitlepage}
+% Sets the title page.
+%    \begin{macrocode}
+\newcommand{\thesistitlepage}{%   
+	\thispagestyle{empty}
+	\begin{spacing}{1.5}
+	\begin{center}
+	\thesistitlebold \\[4mm]
+	by \\[4mm]
+	\thesisstudentbold \\
+	\ifx\undefined\@thesisauthoremail
+		\relax
+	\else
+		\if@litreview
+			\vspace{-8pt}
+			\texttt{\@thesisauthoremail}\\
+		\fi
+	\fi
+	\vspace{8mm}
+	\begin{center}
+		\includegraphics[width=5cm]{MonashCrest}
+	\end{center}
+	\textbf{\thesistypetypesize \thesistype} \\
+	\if@litreview
+		\relax
+	\else
+		Submitted by \@thesisauthor \\
+		\thesisfulfillment\ of the Requirements %\\ 
+		for the Degree of \\
+	\fi
+	\ifx\undefined\thesiscoursecode
+		\textbf{\thesisdegreetypesize \thesisdegree} \\ 
+	\else
+		\textbf{\thesisdegreetypesize \thesisdegree\ (\thesiscoursecode)} \\ 
+	\fi
+	\vspace{12mm}
+	\ifx\undefined\@thesissupervisor
+		\ClassError{cssethesis}{a thesissupervisor must be defined when
+		the litreview option is used}{} 
+	\else
+		Supervisor: \@thesissupervisor\\
+	\fi
+	\ifx\undefined\@thesisassocsupervisor
+		\relax
+	\else
+		Associate Supervisor: \@thesisassocsupervisor\\
+	\fi
+	\strut \vfill
+	\textbf{\Large \@thesisdepartment} \\
+	\textbf{\Large \@thesisuniversity} \\%[4mm]
+	\@thesismonth, \@thesisyear
+	\end{center}
+	\end{spacing}
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thesiscopyrightpage}
+% Creates the copyright page.
+%    \begin{macrocode}
+\newcommand{\thesiscopyrightpage}{%  
+    \thispagestyle{empty}
+    \strut \vfill
+    \begin{center}
+      \begin{spacing}{2}
+      \copyright\ Copyright \\ by \\ \thesiscopyrightholder \\ \@thesisyear
+      \end{spacing}
+    \end{center}
+    \vfill \strut
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{environment}{thesisabstract}
+% The abstract environment.  Will only typeset the abstract using 1.5 spacing.
+%    \begin{macrocode}
+\newenvironment{thesisabstract}{%
+     \newpage
+     \addcontentsline{toc}{chapter}{Abstract}
+     \setlength{\unitlength}{1mm}
+        \begin{center}
+         \begin{spacing}{1.5}
+         \thesistitlebold \\[7mm]
+         \end{spacing}
+         \begin{spacing}{1}
+         \@thesisauthor
+		 \ifx\undefined\@thesisauthorpreviousdegrees
+		 \\
+		 \else
+		 	, \@thesisauthorpreviousdegrees \\
+		 \fi
+		\ifx\undefined\@thesisauthoremail
+			\relax
+		\else
+			\texttt{\@thesisauthoremail}\\
+		\fi
+         \@thesisuniversity, \@thesisyear \\[7mm]
+         Supervisor: \@thesissupervisor \\
+		 \ifx\undefined\@thesissupervisoremail
+			\relax
+		\else
+			\texttt{\@thesissupervisoremail}\\
+		\fi
+		\ifx\undefined\@thesisassocsupervisor
+			\relax
+		\else
+			Associate Supervisor: \@thesisassocsupervisor\\
+			 \ifx\undefined\@thesisassocsupervisoremail
+				\relax
+			\else
+				\texttt{\@thesisassocsupervisoremail}\\
+			\fi
+		\fi
+		 \vspace*{7mm}
+         \textbf{Abstract} \\
+         \end{spacing}
+        \end{center}
+     \vspace{5mm}
+     \noindent}
+     \newpage
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{macro}{\thesisdeclarationpage}
+% Sets the declaration page.
+%    \begin{macrocode}
+\newcommand{\thesisdeclarationpage}{%
+    \begin{center}
+      \begin{spacing}{1.5}
+      \thesistitlebold
+      \end{spacing}
+    \end{center}
+    \vspace{20mm}
+    \begin{center}
+    {\bf Declaration}
+    \end{center}
+     \begin{spacing}{1}
+    I declare that this thesis is my own work and has not been
+    submitted in any form for another degree or diploma at any university
+    or other institute of tertiary education.  Information derived from
+    the published and unpublished work of others has been acknowledged in
+    the text and a list of references is given.
+    \end{spacing}
+    \vspace{15mm}
+    \hfill \begin{minipage}{67mm}
+                     \begin{spacing}{1}
+                     \vspace{10mm}
+                     \setlength{\unitlength}{1mm}
+                     \begin{picture}(67,1)(0,0)
+                        \line(1,0){67}
+                     \end{picture} \\
+                     \@thesisauthor \\
+                     \today 
+                     \end{spacing}
+                   \end{minipage}
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thesissignaturepage}
+% Sets the signature page.
+%    \begin{macrocode}
+\newcommand{\thesissignaturepage}{%
+    \begin{center}
+      \begin{spacing}{1.5}
+      \thesistitlebold
+      \end{spacing}
+    \end{center}
+    \vspace{20mm} 
+    \begin{center}
+      {\bf \thesistype\ Acceptance}
+    \end{center}
+    \begin{spacing}{1}
+    This student's \thesistype, entitled
+    \textbf{\@thesistitle}
+    has been examined by the undersigned committee of
+    examiners and has received full approval for acceptance \thesisfulfillment\ 
+    of the requirements for the degree of \thesisdegree.
+    \end{spacing}
+
+    \vspace{15mm}
+    \hbox to \hsize{\hfill APPROVAL: \begin{minipage}[b]{67mm}
+                     \setlength{\unitlength}{1mm}
+                     \begin{picture}(67,-70)
+                       \multiput(0,-2)(0,-10)
+                         {\thesiscommitteesize}{\line(1,0){67}}
+                     \end{picture}
+                   \end{minipage} Chief Examiner}
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\thesisshorttitlepage}
+% Sets the short title page
+%    \begin{macrocode}
+\newcommand{\thesisshorttitlepage}{%
+    \vbox to 4.1in{\vfil
+      \hbox to \hsize {Short Title: \thesisshorttitle \hfill
+         \@thesisauthorlastname, \thesisdegreeabbreviation\ \@thesisyear
+% This little hack is to make it centered on the page.
+         \hspace{0.5in}}}
+    \newpage}
+%    \end{macrocode}
+% \end{macro}
+%
+% These are modified from \LaTeX2e |book.cls| so they make table of contents
+% entries.  They are also simplified by removing the two column and
+% heading settings.
+% \begin{macro}{\listoffigures}
+%    \begin{macrocode}
+\renewcommand{\listoffigures}{%
+  \chapter*{\listfigurename}%
+  \addcontentsline{toc}{chapter}{\listfigurename}%
+  \@starttoc{lof}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\listoftables}
+%    \begin{macrocode}
+\renewcommand{\listoftables}{%
+  \chapter*{\listtablename}%
+  \addcontentsline{toc}{chapter}{\listtablename}%
+  \@starttoc{lot}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%% \section{Mainmatter}
+%
+% We need to modify the listing of appendices in the |toc|.  This
+% does require a new conditional and changes to |\appendix| and |\@chapter|.
+%
+% \begin{macro}{\if@appendix}
+%    \begin{macrocode}
+\newif\if@appendix\@appendixfalse
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\appendix}
+%    \begin{macrocode}
+\renewcommand{\appendix}{\par
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \renewcommand{\@chapapp}{\appendixname}%
+  \renewcommand{\thechapter}{\Alph{chapter}}
+  \@appendixtrue}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@chapter}
+%    \begin{macrocode}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                       \if@mainmatter
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \if@appendix
+                           \addcontentsline{toc}{chapter}%
+                                   {\appendixname\ \thechapter\ #1}%
+                         \else
+                           \addcontentsline{toc}{chapter}%
+                                   {\protect\numberline{\thechapter}#1}%
+                         \fi
+                       \else
+                         \addcontentsline{toc}{chapter}{#1}%
+                       \fi
+                    \else
+                      \addcontentsline{toc}{chapter}{#1}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\l@chapter}
+% Some changes to the |toc| entries are required.  Every entry should be
+% followed by a dot leader.  In the |book.cls|, chapter entries are not
+% followed by a dot leader.  This code corrects that.
+%    \begin{macrocode}
+\renewcommand{\l@chapter}[2]{%
+% Some older versions of LaTeX2e (older than Dec. 1994) define \l@chapter
+% using \newcommand instead of \newcommand*.  If you have an error
+% at this line, try removing the *.
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak%
+% This line changed from \hfil
+      \leaders\hbox{$\m@th \mkern \@dotsep mu.\mkern \@dotsep mu$}\hfill
+      \nobreak\hbox to\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \section{Backmatter}
+%
+% \begin{environment}{thesisauthorvita}
+% This is really a stupid environment.  All it does
+% is enter a contents line, place the heading, and enter single spacing.
+% The author must do all formatting for the page.
+%    \begin{macrocode}
+\newenvironment{thesisauthorvita}{%
+     \clearpage
+     \chapter*{\thesisvitahead
+         \@mkboth{\uppercase{\thesisvitahead}}
+                 {\uppercase{\thesisvitahead}}}
+    \addcontentsline{toc}{chapter}{\thesisvitahead}
+    \begin{spacing}{\thesisdefaultbaselinestretch}}
+    {\end{spacing} \par \vspace{20mm}
+     \noindent Permanent Address:
+       \begin{minipage}[t]{90mm}
+		{\@thesisdepartment\\Monash University\\Australia}
+       \end{minipage}
+     \par \vspace{15mm}
+     \noindent This \lowercase\expandafter{\thesistype} was
+       typeset with \LaTeXe\footnote{\LaTeXe{} is an extension of \LaTeX.
+       \LaTeX{} is a collection of macros for \TeX.  \TeX{} is a
+       trademark of the American Mathematical Society.  The macros used in
+       formatting this \lowercase\expandafter{\thesistype} were written
+       by Glenn Maughan and modified by Dean Thompson and David Squire of Monash University.
+    } by \@thesistypist.}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{thebibliography}
+% This hasn't been changed much from |book.cls|.  Only the addition of the
+% |\addcontentsline|.  In addition, the |\bibname| is changed to ``References''.
+%
+%    \begin{macrocode}
+\renewcommand{\bibname}{References}
+% Updated in v1.5 using more recent code from book.cls, 2000/05/19 v1.4b.
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibname%
+% This line added.
+      \addcontentsline{toc}{chapter}{\bibname}
+        \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+%    \end{macrocode}
+% \end{environment}
+%
+% \section{Utility Functions}
+%
+% \begin{macro}{\thesistime}
+% This one computes the current time for the |thesisdraft| option.
+%    \begin{macrocode}
+\newcount\hour \newcount\minute
+\hour=\time  \divide \hour by 60
+\minute=\time
+\loop \ifnum \minute > 59 \advance \minute by -60 \repeat
+\def\thesistime{\ifnum \hour<13 \number\hour:%
+                      \ifnum \minute<10 0\fi
+                      \number\minute
+                      \ifnum \hour<12 \ am\else \ pm\fi
+         \else \advance \hour by -12 \number\hour:%
+                      \ifnum \minute<10 0\fi
+                      \number\minute \ pm\fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\timestamp}
+%    \begin{macrocode}
+\def\timestamp{\thesistime, \today}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@uppercase}
+% |\@uppercase| is simply short
+% hand to convert the contents of a macro to uppercase.  It may not
+% work under all circumstances, but does it's job for this style
+%    \begin{macrocode} 
+\newcommand{\@uppercase}[1]{{\expandafter\uppercase\expandafter{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@separator}
+% |\@separator| will draw the rule used on both the title and
+% abstract pages.
+%    \begin{macrocode}
+\newcommand\@separator{\vrule height.4pt depth0pt width3.5in}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@numberword}
+%    \begin{macrocode}
+\newcommand\@numberword[1]{\ifcase#1 zero\or one\or two\or three\or four\or five\or six\or seven\or eight\else nine\fi\relax}
+%    \end{macrocode}
+% \end{macro}
+%
+% \endinput
+%
+\endinput
+%</class>
+%

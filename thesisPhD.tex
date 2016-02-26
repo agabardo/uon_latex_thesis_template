@@ -1,0 +1,135 @@
+% \documentclass[a4paper,11pt,phdthesis,twoside,oneandhalfspace]{cssethesis}  %% <-- uncomment this string if you want to use old-school **dvips**
+\documentclass[a4paper,11pt,phdthesis,oneside,oneandhalfspace,pdflatex]{cssethesis} %% <--- uncomment this string if you want to use PDFLaTeX
+% * Include the option "pdflatex" above if you want to use pdflatex rather than dvips
+% * Include the option "oneside" if you don't want formatting for two-sided  printing.
+% * include ::
+%                 = singlespace}{\AtBeginDocument{\singlespacing}}
+%                 = oneandhalfspace}{\AtBeginDocument{\onehalfspacing}}
+%                 = doublespace}{\AtBeginDocument{\doublespacing}}
+% * Include the option "litreview" above if this is a literature review.
+% * Include the option "nocoursecode" so that the numerical course code is suppressed after the course name.
+% * Include option "thesisdraft" to get a timestamp and "Draft" message in   the footer
+% * Include option "thesispsdraft" to get a timestamp and "Draft" message in
+%   the footer, along with a grey "DRAFT" in the margin. Note: this only
+%   works with latex, not pdflatex
+
+%%%% LATEX STUFF %%%
+%\usepackage[T2A]{fontenc}
+\usepackage[british]{babel}
+
+\usepackage[sfdefault,light]{roboto}  %% Option 'sfdefault' only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+%\renewcommand{\familydefault}{\sfdefault} //Para usar a fonte sans-serif horrivel, remover comentario nessa linha.
+
+\usepackage[babel=true]{microtype}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+\usepackage{amssymb,amsmath,amsfonts,geometry,cite,enumerate,float}
+\usepackage{setspace} %%% for additional spacing
+\usepackage{multirow,bigstrut,bigdelim}
+\usepackage{adjustbox,lipsum}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pbox}
+
+\usepackage{tabto}
+
+\onehalfspacing %%% <- Increase spacing for the proofread
+\graphicspath{{images/}}  %% <-- where you store all your images.
+%%%% LATEX STUFF %%%
+
+%%%% Thesis STUFF %%%
+\thesisauthor{\Large Name Surname}
+\thesisauthorlastname{Surname}
+%\thesisauthorpreviousdegrees{MSc. Software Engineer.} % Optional
+\thesisdepartment{\bfseries The University of Newcastle \\ Faculty of Engineering and Built Environment\\  School of Electrical Engineering and Computer Science} % Optional.
+%\thesismonth{July} % Optional. Current month is used if this is not set
+%\thesisyear{2015} % Optional. Current year is used if this is not set
+\thesistitle{Thesis title goes here}
+\thesissupervisor{Advisor-name Surname}
+\thesissupervisoremail{advisor-email@newcastle.edu.au}
+\thesisassocsupervisor{Co-advisor-name surname}
+\thesisassocsupervisoremail{coadvisor@newcastle.edu.au}
+%%%% Thesis STUFF %%%
+
+\makeatletter
+\newcommand{\nosemic}{\renewcommand{\@endalgocfline}{\relax}}% Drop semi-colon ;
+\newcommand{\dosemic}{\renewcommand{\@endalgocfline}{\algocf@endline}}% Reinstate semi-colon ;
+\newcommand{\pushline}{\Indp}% Indent
+\newcommand{\popline}{\Indm\dosemic}% Undent
+\makeatother
+
+\makeatletter
+\newenvironment{Ualgorithm}[1][htpb]
+  {\def\@algocf@post@ruled{\kern\interspacealgoruled\hrule  height\algoheightrule\kern3pt\relax}%
+    \def\@algocf@capt@ruled{under}
+    \begin{algorithm}[#1]}
+  {\end{algorithm}}
+\makeatother
+
+\setlength{\algoheightrule}{0.1pt} % thickness of the rules above and below
+\setlength{\algotitleheightrule}{0pt} % thicknes of the rule below the title
+
+\usepackage{hyphenat}
+\hyphenation{Girvan}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Front matter
+%%
+\frontmatter					% start the thesis front matter.
+\thesistitlepage				% Generate the title page.
+\thesiscopyrightpage			% Generate the copyright page.
+\thesisdeclarationpage			% generate the declaration page (optional).
+\include{thesis_acknowledgments}
+\tableofcontents				% Generate a table of contents.
+\listoftables					% Generate a list of tables (optional).
+\listoffigures					% Generate a list of figures (optional).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{thesis_abstract}
+%%%%%%%%%%%%%%%%%%  START::: List of Publications %%%%%%%%%%%%
+%\include{thesis_publications}
+%%%%%%%%%%%%%%%%%% ## END::: List of Publications %%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Main matter
+%%
+\mainmatter	% start the thesis body.
+
+%%%%%%%%%%%%%%%%%%%  START::: Introduction  %%%%%%%%%%%%
+\chapter{Chapter one title goes here}\label{chap:chapter1}
+\input{chapter1}
+
+\chapter{Chapter two title goes here}\label{chap:chapter2}
+\input{chapter2}
+
+%\appendix % all \chapter{..} commands after this will generate appendices
+%\chapter{This appendix should get a letter}
+%\label{app:example}
+%An appendix before the backmatter gets an automatically generated letter by
+%which it can be referred to. This is Appendix~\ref{app:example}.
+
+%\chapter{Simulation Source Code}
+%You may want to investigate the \texttt{lgrind} program and package if you
+%wish to include source code in your thesis
+
+\backmatter % start the thesis back matter - the numbering of chapters stops here.
+
+%\chapter{Last Thing} % Appendices after the \backmatter command do not  get a letter
+%This sort of appendix has no letter.
+
+% USE THIS SECTION IF YOU NEED TO ADD Appendix.
+%\chapter{Appendix 1 - Fitness curves}\label{appendix:fitness_curves}
+%\input{fitness_curves}
+
+\pagestyle{plain}
+\bibliographystyle{abbrv}
+\bibliography{biblio/bibliography}  %%% this is a link to the Bibliography files
+\end{document} 

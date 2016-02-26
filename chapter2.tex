@@ -1,0 +1,49 @@
+% !TEX root = thesisPhD.tex 
+An small example using tables and algorithms.
+\section{Tables}
+
+Table \ref{table:benchmarks} is an example of table. Play around with the arraystretch parameter to get more or less space between rows. The size is set to textwidht, you can also use amounts in inches or centimeters.
+
+\begin{table}[ht]
+\renewcommand{\arraystretch}{1.1}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Network}  & \textbf{Class}          & \textbf{Nodes} & \textbf{Edges} & \textbf{AVG Degree} & \textbf{Max Modularity} \\ \toprule
+Zakary's Karate Club      & \small Real world network      & 34             & 78             & 4.59       & 0.4198        \\ \hline
+Lusseau's Dolphins        & \small Real world network      & 62             & 159            & 5.13       & 0.5285        \\ \hline
+American College Football & \small Real world network      & 115            & 613            & 10.66      & 0.6046        \\ \hline
+Jazz  Musicians                    & \small Real world network      & 119            & 2742           & 27.70        & 0.4451       \\ \bottomrule
+\end{tabular}
+}
+\caption{List of benchmark networks.}
+\label{table:benchmarks}
+\end{table}
+
+\section{Algorithms}
+And here, just an small example of an algorithm.
+
+\RestyleAlgo{boxed} %Comment this line with '%' to change the aspect of the box. :-)
+\begin{algorithm}[H]
+\RestyleAlgo{boxruled}
+\label{tourment-algorithm}
+\SetAlgoLined
+\DontPrintSemicolon % Some LaTeX compilers require you to use \dontprintsemicolon instead
+%\KwIn{a complex network $G$.}
+%\KwOut{the dendrogram with partitions of $G$.}
+$Input: (Population_0, Tournment\_Size)$;\;
+%$Population_0 \leftarrow Current\_Population;$\;
+%$Tournment\_Size \leftarrow Tournment\_Size\_Parameter;$\;
+$Population_1 = New\_Population;$\;
+$Population_1 \leftarrow \{Indindividual_1,...,Individual_{Tournment\_Size}\};$\;
+\For{$i =0; \leqslant Tournment\_Size$}{
+	$Population_1[i] \leftarrow Population_0[random[0,Tournment\_Size]];$\;
+}
+$Output : Population_1.Best.$\;
+\caption{Tournament selection.}
+\end{algorithm}
+
+\vspace{1cm} %This is used to add some space after the algorithm.
+
+\paragraph{Citations:} and here, is how do you cite with a single reference \cite{harik1999compact}, or with several \cite{harik1999compact, goldberg1988genetic}. Basically, you have here all that you need to build your thesis with LaTeX. Have fun!

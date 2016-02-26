@@ -1,0 +1,9 @@
+% csssethesis.cls installation file
+% $Revision: 1.0 $
+% Run LaTeX on this file to build the cssethesis.cls file from cssethesis.dtx
+%
+\def\batchfile{cssethesis.ins}
+\input docstrip.tex
+
+\keepsilent
+\generateFile{cssethesis.cls}{t}{\from{cssethesis.dtx}{class}}

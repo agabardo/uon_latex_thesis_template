@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{goldberg1988genetic}
+D.~E. Goldberg and J.~H. Holland.
+\newblock Genetic algorithms and machine learning.
+\newblock {\em Machine learning}, 3(2):95--99, 1988.
+
+\bibitem{harik1999compact}
+G.~R. Harik, F.~G. Lobo, and D.~E. Goldberg.
+\newblock The compact genetic algorithm.
+\newblock {\em Evolutionary Computation, IEEE Transactions on}, 3(4):287--297,
+  1999.
+
+\end{thebibliography}
